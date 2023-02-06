@@ -1,7 +1,7 @@
 <%- contentFor('header') %>
 
 <div style="margin-top: -10px; color: red;">
-    <%= score1 %> : <%= score2 %>
+    0 : 0
 </div>
 <div>
     <%= nickname1 %>
@@ -32,7 +32,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        room = window.location.href.split('id=')[1];
+        room = IDroom
+        console.log("id: " + room)
         var socket = io.connect()
         socket.emit('create', [room, 'nickname1', 'nickname2'])
 
@@ -43,6 +44,11 @@
         socket.on('click', function(params) {
             $('td#' + params[0]).text(params[1])
         });
-        
+
+        socket.on('end', function(params){
+            console.log(score1)
+            score1++
+            console.log(socre1)
+        })
     </script>
     

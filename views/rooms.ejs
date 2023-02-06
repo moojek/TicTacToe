@@ -6,7 +6,7 @@ Rooms list
         <% rooms.forEach(room => { %>
         <tr>
             <td>
-                <form method="post" action="/game?id=<%= room.replaceAll(' ', '_') %>">
+                <form method="get" action="/game/<%= room.replaceAll(' ', '') %>">
                     <%= room %>
                     <button class="btn btn-primary">Enter</button>
                 </form>
@@ -47,5 +47,4 @@ Rooms list
             modal.style.display = "none";
         }
     }
-
 </script>

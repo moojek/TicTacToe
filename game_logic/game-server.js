@@ -25,7 +25,7 @@ const setupGameServer = function (httpServer) {
                 board[params[0]][parseInt(id)] = Rooms[params[0]]
                 io.to(params[0]).emit('click', [id, Rooms[params[0]]]);
                 if (gameLogic.isWinner(board[params[0]])) {
-                    //render game with the same users and other score
+                    io.to(params[0]).emit('end', 1) // ktory wygrał
                 }
 
                 Rooms[params[0]] = characters[Rooms[params[0]]]
