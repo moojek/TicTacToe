@@ -2,7 +2,50 @@
 Rooms list
 
 <%- contentFor('body') %>
-Room 1
-Room 2
-Room 3
-<button class="btn btn-primary">New room</button>
+    <table>
+        <% rooms.forEach(room => { %>
+        <tr>
+            <td>
+                <form method="post" action="/game?room=<%= room.replaceAll(' ', '_') %>"></form>
+                    <%= room %>
+                    <button class="btn btn-primary">Enter</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+
+<button class="btn btn-primary" id="myBtn">New Room</button>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form method="post">
+        <div style="text-align: center;">
+            Enter room name
+            <input type="text" name='RoomName' value="
+            <%= nickname + ' Room' %>
+            ">
+            <button id="AddRoom" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
