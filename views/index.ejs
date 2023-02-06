@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- contentFor('header') %>
+Identify yourself!
+
+<%- contentFor('body') %>
+<form>
+  <div class="mb-3">
+    <label for="inputNickname" class="form-label">Nickname</label>
+    <input type="text" id="inputNickname" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Play!</button>
+</form>
