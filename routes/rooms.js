@@ -13,8 +13,4 @@ router.post('/', function (req, res, next) {
     res.render('rooms', { title: 'Rooms - Tic Tac Toe', nickname: req.cookies.nickname, rooms: rooms})
 });
 
-router.post('/', function (req, res, next) {
-    console.log("SHUJ");
-});
-
 module.exports = router
