@@ -32,9 +32,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        //var express = require('express')
-        //var router = express.Router()
-
         room = window.location.href.split('id=')[1];
         var socket = io.connect()
         socket.emit('create', [room, 'nickname1', 'nickname2'])
@@ -46,18 +43,6 @@
         socket.on('click', function(params) {
             $('td#' + params[0]).text(params[1])
         });
-        
-        socket.on('winner', function(params) {
-            router.get('/', function (req, res, next) {
-                params ? score1++ : score2++;
-                res.render('game', {title: 'Game - Tic Tac Toe', nickname1: nickname1, nickname2: nickname2, score1: score1, score2: score2}) 
-            })
-        })
-
-        socket.on('reset', function(){
-            $('td').text('')
-            location.reload()
-        })
         
     </script>
     
