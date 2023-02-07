@@ -1,4 +1,4 @@
-const nicknamesMiddleware = function (req, res, next) {
+const middleware = function (req, res, next) {
     if(!req.cookies.nickname) {
         res.redirect('/')
     } else {
@@ -10,4 +10,4 @@ const addNicknameCookie = function (res, nickname) {
     res.cookie('nickname', nickname)
 }
 
-module.exports = {nicknamesMiddleware, addNicknameCookie}
+module.exports = {middleware, addNicknameCookie}

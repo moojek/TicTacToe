@@ -5,6 +5,7 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 
+var requireNickname = require('./core/nicknames')
 var indexRouter = require('./routes/index')
 var roomsRouter = require('./routes/rooms')
 var gameRouter = require('./routes/game')
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use(requireNickname.middleware)
 app.use('/rooms', roomsRouter)
 app.use('/game', gameRouter)
 
