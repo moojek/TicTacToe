@@ -1,8 +1,7 @@
 var express = require('express')
 var router = express.Router()
-var router = express.Router()
 var createError = require('http-errors')
-
+var db = require('../persistence/in-memory-db')
 
 router.get('/', function (req, res, next) {
     if (!req.query.roomId) {
@@ -10,12 +9,13 @@ router.get('/', function (req, res, next) {
     } else
         res.redirect('/game/' + req.query.roomId)
 })
-
-router.get('/:id/:name/', function (req, res, next) {
-    console.log(req.params.id)
-    res.render('game', {title: 'Game - Tic Tac Toe'})
+router.get('/:id/:name', function (req, res, next) {
+    if (!db.isRoomActive(req.params.id))
+        next(createError(404), 'There isn\'t any game with such id')
+    else {
+        console.log(req.params.id)
+        res.render('game', {title: 'Game - Tic Tac Toe'})
+    }
 })
 
-
-module.exports = router
 module.exports = router
