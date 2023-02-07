@@ -10,45 +10,44 @@
 </div>
 
 <%- contentFor('body') %>
-    <body style="text-align: center">
-        <table class="game">
-            <tr>
-                <td id='0'></td>
-                <td id='1'></td>
-                <td id='2'></td>
-            </tr>
-            <tr>
-                <td id='3'></td>
-                <td id='4'></td>
-                <td id='5'></td>
-            </tr>
-            <tr>
-                <td id='6'></td>
-                <td id='7'></td>
-                <td id='8'></td>
-            </tr>
-        </table>
-    </body>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        room = IDroom
-        console.log("id: " + room)
-        var socket = io.connect()
-        socket.emit('create', [room, 'nickname1', 'nickname2'])
+<body style="text-align: center">
+<table class="game">
+    <tr>
+        <td id='0'></td>
+        <td id='1'></td>
+        <td id='2'></td>
+    </tr>
+    <tr>
+        <td id='3'></td>
+        <td id='4'></td>
+        <td id='5'></td>
+    </tr>
+    <tr>
+        <td id='6'></td>
+        <td id='7'></td>
+        <td id='8'></td>
+    </tr>
+</table>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var room = '<%= roomId %>'
+    var socket = io.connect()
+    socket.emit('create', [room, 'nickname1', 'nickname2'])
 
-        $('td').click(function() {
-            socket.emit('click', this.id)
-        });
+    $('td').click(function () {
+        socket.emit('click', this.id)
+    });
 
-        socket.on('click', function(params) {
-            $('td#' + params[0]).text(params[1])
-        });
+    socket.on('click', function (params) {
+        $('td#' + params[0]).text(params[1])
+    });
 
-        socket.on('end', function(params){
-            console.log(score1)
-            score1++
-            console.log(socre1)
-        })
-    </script>
+    socket.on('end', function (params) {
+        console.log(score1)
+        score1++
+        console.log(socre1)
+    })
+</script>
     
