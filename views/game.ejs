@@ -38,9 +38,9 @@
         var socket = io.connect()
         socket.emit('create', [room, user])
 
-        $('td').click(function() {
-            socket.emit('click', this.id)
-        });
+    $('td').click(function () {
+        socket.emit('click', this.id)
+    });
 
         socket.on('click', function(params) {
             $('td#' + params[0]).text(params[1])

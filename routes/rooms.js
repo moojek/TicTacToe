@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     console.log('rooms: ' + rooms);
     rooms.push(req.body.RoomName.trim())
-    res.render('rooms', { title: 'Rooms - Tic Tac Toe', nickname: req.cookies.nickname, rooms: rooms})
+    res.redirect('/rooms')
 });
 
 module.exports = router
