@@ -6,31 +6,48 @@ const setupGameServer = function (httpServer) {
 
     var Rooms = []
     var board = []
+    var UsersCounter = []
 
     io.on('connection', function (socket) {
         socket.on('create', function (params) {
-            socket.join(params[0]);
+            room = params[0]
+            if(!UsersCounter[room])
+                UsersCounter[room] = 0
+            UsersCounter[room]++
+            if (UsersCounter[room] > 2) {
+                socket.emit('NoSlots', 'This room is occupied')
+                socket.disconnect()
+            }
+            console.log("Counter: " + UsersCounter[room])
+            socket.join(room)
             let sign = 'X'
-            board[params[0]] = []
-            if (!Rooms[params[0]])
+            board[room] = []
+            if (!Rooms[room])
                 sign = 'O'
-            Rooms[params[0]] = 'X'
+            Rooms[room] = 'X'
             let characters = {X: 'O', O: 'X'}
 
-            console.log("connected: " + socket.id);
-
+            var cnt = 0
+            
             socket.on('click', function (id) {
-                if (board[params[0]][parseInt(id)] || Rooms[params[0]] != sign)
+                if(!cnt)
+                    io.to(room).emit('DisplayUser', [sign == 'O' ? false : true, params[1]])
+                if (board[room][parseInt(id)] || Rooms[room] != sign)
                     return
-                board[params[0]][parseInt(id)] = Rooms[params[0]]
+                board[room][parseInt(id)] = Rooms[room]
 
-                io.to(params[0]).emit('click', [id, Rooms[params[0]]]);
-                if (gameLogic.isWinner(board[params[0]])) {
-                    io.to(params[0]).emit('winner', Rooms[params[0]] == 'O' ?  'var1' : 'var2')
-                    board[params[0]] = []
+                io.to(room).emit('click', [id, Rooms[room]]);
+                if (gameLogic.isWinner(board[room])) {
+                    io.to(room).emit('winner', Rooms[room] == 'O' ?  'var1' : 'var2')
+                    board[room] = []
                 }
 
-                Rooms[params[0]] = characters[Rooms[params[0]]]
+                Rooms[room] = characters[Rooms[room]]
+            })
+
+            socket.on('disconnect', function() {
+                UsersCounter[room]--
+                io.emit('Reset')
             })
         });
     })

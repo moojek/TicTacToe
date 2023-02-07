@@ -6,7 +6,7 @@ Rooms list
         <% rooms.forEach(room => { %>
         <tr>
             <td>
-                <form method="get" action="/game/<%= room.replaceAll(' ', '') %>">
+                <form method="get" action="/game/<%= room.replaceAll(' ', '') %>/<%= nickname %>/">
                     <%= room %>
                     <button class="btn btn-primary">Enter</button>
                 </form>

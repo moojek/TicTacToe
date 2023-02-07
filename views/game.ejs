@@ -3,10 +3,10 @@
 <div class="gameHeader" style="margin-top: -10px; color: red;">
     <p id="var1">0</p> : <p id="var2">0</p>
 </div>
-<div>
-    <%= nickname1 %>
+<div class="gameHeader">
+    <p id="nick1"></p> 
     vs
-    <%= nickname2 %>
+    <p id="nick2"></p>
 </div>
 
 <%- contentFor('body') %>
@@ -32,9 +32,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        room = window.location.href.split('game/')[1];
+        room = window.location.href.split('game/')[1].split('/')
+        user = room[1]
+        room = room[0]
         var socket = io.connect()
-        socket.emit('create', [room, 'nickname1', 'nickname2'])
+        socket.emit('create', [room, user])
 
         $('td').click(function() {
             socket.emit('click', this.id)
@@ -49,7 +51,23 @@
             var number = computerScore.innerHTML
             number++
             computerScore.innerHTML = number
-            $('td').text('');
+            $('td').text('')
+        })
+
+        socket.on('DisplayUser', function(params){
+            console.log("info: " + user + ", " + params)
+            var User = document.getElementById('nick1')
+            if(params[0])
+                var User = document.getElementById('nick2')
+            User.innerHTML = params[1]
+        })
+
+        socket.on('Reset', function(){
+            $('td').text('')
+        })
+
+        socket.on('NoSlots', function(params){
+            alert(params)
         })
     </script>
     
