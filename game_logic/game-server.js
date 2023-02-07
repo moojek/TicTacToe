@@ -1,5 +1,6 @@
 var socket = require('socket.io')
 var gameLogic = require('./game-logic')
+var DB = require('../persistence/in-memory-db')
 
 const setupGameServer = function (httpServer) {
     var io = socket(httpServer)
@@ -48,10 +49,12 @@ const setupGameServer = function (httpServer) {
             })
 
             socket.on('disconnect', function() {
-                UsersCounter[room]--
+                UsersCounter[room] = 0
                 board[room] = []
-                !Rooms[room]
-                io.emit('Reset')
+                Rooms[room] = 0
+                roomID = DB.getIdForName(room)
+                DB.removeRoom(roomID)
+                io.to(room).emit('end')
             })
         });
     })

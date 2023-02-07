@@ -72,5 +72,11 @@
             alert(params)
             window.location.href = '/rooms'
         })
+
+        socket.on('end', function(){
+            alert('The opponent left, room will be closed')
+            
+            window.location.href = '/rooms'
+        })
     </script>
     
