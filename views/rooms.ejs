@@ -7,7 +7,7 @@ Rooms list
         <form method="get" action="/game" id="roomSelectForm">
             <select class="form-select" name="roomId" id="roomSelect" size="6">
                 <% rooms.forEach(room => { %>
-                    <option value="<%= room.replaceAll(' ', '') %>"><%= room %></option>
+                    <option value="<%= room.replaceAll(' ', '') %>/<%= nickname %>/"><%= room %></option>
                 <% }) %>
             </select>
         </form>

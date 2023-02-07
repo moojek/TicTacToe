@@ -36,3 +36,7 @@ a {
 .game tr td:last-child {
   border-right: 0;
 }
+
+.gameHeader p {
+  display: inline;
+}
