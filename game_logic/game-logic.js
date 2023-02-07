@@ -18,4 +18,14 @@ function isWinner(board) {
     return res
 }
 
-module.exports = {isWinner}
+function isDraw(board) {
+    let res = 0
+    for(var i=0; i<9; i++)
+        if(!board[i])
+            res++
+    if(!res)
+        return true
+    return false
+}
+
+module.exports = {isWinner, isDraw}

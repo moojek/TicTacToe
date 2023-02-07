@@ -18,7 +18,7 @@ const setupGameServer = function (httpServer) {
                 socket.emit('NoSlots', 'This room is occupied')
                 socket.disconnect()
             }
-            console.log("Counter: " + UsersCounter[room])
+
             socket.join(room)
             let sign = 'X'
             board[room] = []
@@ -39,6 +39,11 @@ const setupGameServer = function (httpServer) {
                 io.to(room).emit('click', [id, Rooms[room]]);
                 if (gameLogic.isWinner(board[room])) {
                     io.to(room).emit('winner', Rooms[room] == 'O' ?  'var1' : 'var2')
+                    board[room] = []
+                }
+
+                if (gameLogic.isDraw(board[room])) {
+                    io.to(room).emit('Reset')
                     board[room] = []
                 }
 
