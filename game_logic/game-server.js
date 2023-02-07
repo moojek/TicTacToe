@@ -26,12 +26,9 @@ const setupGameServer = function (httpServer) {
                 sign = 'O'
             Rooms[room] = 'X'
             let characters = {X: 'O', O: 'X'}
-
-            var cnt = 0
             
             socket.on('click', function (id) {
-                if(!cnt)
-                    io.to(room).emit('DisplayUser', [sign == 'O' ? false : true, params[1]])
+                io.to(room).emit('DisplayUser', [sign == 'O' ? false : true, params[1]])
                 if (board[room][parseInt(id)] || Rooms[room] != sign)
                     return
                 board[room][parseInt(id)] = Rooms[room]
@@ -52,6 +49,8 @@ const setupGameServer = function (httpServer) {
 
             socket.on('disconnect', function() {
                 UsersCounter[room]--
+                board[room] = []
+                !Rooms[room]
                 io.emit('Reset')
             })
         });

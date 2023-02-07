@@ -1,5 +1,7 @@
 <%- contentFor('header') %>
-
+<div style="float: right;">
+    <button onclick='window.location.href = "/rooms"' class="btn btn-secondary"><span class="glyphicon glyphicon-refresh"></span> Leave</button>
+</div>
 <div class="gameHeader" style="margin-top: -10px; color: red;">
     <p id="var1">0</p> : <p id="var2">0</p>
 </div>
@@ -68,6 +70,7 @@
 
         socket.on('NoSlots', function(params){
             alert(params)
+            window.location.href = '/rooms'
         })
     </script>
     
